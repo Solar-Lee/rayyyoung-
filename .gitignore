@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Env / secrets
+.env
+
+# App database (rebuilt from data/raw/*.json on startup)
+data/app.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# Test / tooling
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Playwright traces
+trace.zip
+*.har
+
+# OS
+.DS_Store

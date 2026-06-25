@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}找不到標案{% endblock %}
+{% block content %}
+<div class="bg-white rounded-lg shadow p-12 text-center">
+  <div class="text-5xl mb-4">🔍</div>
+  <h1 class="text-xl font-bold mb-2">找不到該標案</h1>
+  <p class="text-slate-500 mb-6">此標案可能尚未被爬取，或識別碼有誤。</p>
+  <a href="/tenders" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-700">回標案搜尋</a>
+</div>
+{% endblock %}

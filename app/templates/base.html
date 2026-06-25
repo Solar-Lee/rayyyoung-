@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}政府標案投標平台{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen">
+  <nav class="bg-slate-900 text-slate-100 shadow">
+    <div class="max-w-7xl mx-auto px-4 flex items-center gap-1 h-14">
+      <a href="/" class="font-bold text-lg mr-6 flex items-center gap-2">
+        <span class="text-sky-400">◈</span> 政府標案投標平台
+      </a>
+      {% set nav = [('dashboard','/','儀表板'), ('tenders','/tenders','標案搜尋'), ('watchlist','/watchlist','追蹤清單'), ('subscriptions','/subscriptions','關鍵字訂閱')] %}
+      {% for key, href, label in nav %}
+      <a href="{{ href }}"
+         class="px-3 py-2 rounded text-sm {{ 'bg-sky-600 text-white' if active == key else 'hover:bg-slate-700' }}">
+        {{ label }}
+      </a>
+      {% endfor %}
+      <span class="ml-auto text-xs text-slate-400">資料來源：政府電子採購網</span>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="max-w-7xl mx-auto px-4 py-8 text-center text-xs text-slate-400">
+    本平台資料蒐集自政府電子採購網（web.pcc.gov.tw），僅供非商業參考用途，實際以官方公告為準。
+  </footer>
+</body>
+</html>

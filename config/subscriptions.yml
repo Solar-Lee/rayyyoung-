@@ -1,0 +1,20 @@
+# 關鍵字訂閱清單
+# 每筆訂閱：當每日新標案的「標案名稱 / 機關名稱」命中任一 match 關鍵字時，寄 Email 通知。
+# GitHub Actions 的 notify 步驟與平台「訂閱管理」頁皆讀寫此檔。
+#
+# 範例：
+# subscriptions:
+#   - email: admin@jadedrop.co
+#     keywords:
+#       - 資訊系統
+#       - 軟體開發
+#       - 雲端
+#     active: true
+
+subscriptions:
+  - email: admin@jadedrop.co
+    keywords:
+      - 資訊
+      - 軟體
+      - 系統
+    active: true

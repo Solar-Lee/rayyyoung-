@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}儀表板 — 政府標案投標平台{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">儀表板</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+  <div class="bg-white rounded-lg shadow p-5">
+    <div class="text-slate-500 text-sm">資料庫標案總數</div>
+    <div class="text-3xl font-bold text-slate-800 mt-1">{{ total }}</div>
+  </div>
+  <div class="bg-white rounded-lg shadow p-5">
+    <div class="text-slate-500 text-sm">今日新公告</div>
+    <div class="text-3xl font-bold text-sky-600 mt-1">{{ today_count }}</div>
+  </div>
+  <div class="bg-white rounded-lg shadow p-5">
+    <div class="text-slate-500 text-sm">追蹤中標案</div>
+    <div class="text-3xl font-bold text-emerald-600 mt-1">{{ watch_count }}</div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <section class="lg:col-span-2 bg-white rounded-lg shadow p-5">
+    <h2 class="font-bold text-lg mb-3">最新標案</h2>
+    <table class="w-full text-sm">
+      <thead class="text-slate-500 border-b">
+        <tr><th class="text-left py-2">公告日</th><th class="text-left">機關</th><th class="text-left">標案名稱</th></tr>
+      </thead>
+      <tbody>
+        {% for t in latest %}
+        <tr class="border-b hover:bg-slate-50">
+          <td class="py-2 whitespace-nowrap text-slate-500">{{ t.publish_date | dash }}</td>
+          <td class="pr-2">{{ t.org_name | dash }}</td>
+          <td><a class="text-sky-700 hover:underline" href="/tender/{{ t.pcc_pk }}">{{ t.title | dash }}</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" class="py-6 text-center text-slate-400">尚無資料，請先執行每日爬取。</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <div class="space-y-6">
+    <section class="bg-white rounded-lg shadow p-5">
+      <h2 class="font-bold text-lg mb-3">即將截止（3 日內）</h2>
+      <ul class="space-y-2 text-sm">
+        {% for t in closing_soon %}
+        <li class="flex justify-between gap-2">
+          <a class="text-sky-700 hover:underline truncate" href="/tender/{{ t.pcc_pk }}">{{ t.title | dash }}</a>
+          <span class="text-rose-600 whitespace-nowrap">{{ t.deadline | dash }}</span>
+        </li>
+        {% else %}
+        <li class="text-slate-400">目前無即將截止的標案。</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="bg-white rounded-lg shadow p-5">
+      <h2 class="font-bold text-lg mb-3">機關標案數 Top</h2>
+      <ul class="space-y-1 text-sm">
+        {% for name, c in top_orgs %}
+        <li class="flex justify-between"><span class="truncate">{{ name }}</span><span class="text-slate-500">{{ c }}</span></li>
+        {% else %}
+        <li class="text-slate-400">尚無資料。</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+</div>
+{% endblock %}

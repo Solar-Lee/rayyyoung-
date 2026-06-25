@@ -1,0 +1,4 @@
+/* 平台少量自訂樣式，主要排版交給 Tailwind CDN */
+body { font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; }
+table { border-collapse: collapse; }
+::selection { background: #0284c7; color: #fff; }

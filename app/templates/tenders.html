@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}標案搜尋 — 政府標案投標平台{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">標案搜尋</h1>
+  <div class="flex gap-2">
+    <a href="/export.csv?{{ export_qs }}" class="px-3 py-2 bg-emerald-600 text-white rounded text-sm hover:bg-emerald-700">匯出 CSV</a>
+    <a href="/export.xlsx?{{ export_qs }}" class="px-3 py-2 bg-emerald-700 text-white rounded text-sm hover:bg-emerald-800">匯出 Excel</a>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+  <aside class="bg-white rounded-lg shadow p-4 h-fit">
+    <form method="get" action="/tenders" class="space-y-3 text-sm">
+      <div>
+        <label class="block text-slate-500 mb-1">關鍵字（名稱/機關/案號）</label>
+        <input name="q" value="{{ filter.q or '' }}" class="w-full border rounded px-2 py-1.5" placeholder="如：資訊系統" />
+      </div>
+      <div>
+        <label class="block text-slate-500 mb-1">機關名稱</label>
+        <input name="org" value="{{ filter.org or '' }}" class="w-full border rounded px-2 py-1.5" />
+      </div>
+      <div>
+        <label class="block text-slate-500 mb-1">標的分類</label>
+        <input name="category" value="{{ filter.category or '' }}" list="categories" class="w-full border rounded px-2 py-1.5" />
+        <datalist id="categories">{% for c in categories %}<option value="{{ c }}">{% endfor %}</datalist>
+      </div>
+      <div>
+        <label class="block text-slate-500 mb-1">招標方式</label>
+        <input name="tender_type" value="{{ filter.tender_type or '' }}" list="ttypes" class="w-full border rounded px-2 py-1.5" />
+        <datalist id="ttypes">{% for t in tender_types %}<option value="{{ t }}">{% endfor %}</datalist>
+      </div>
+      <div class="flex gap-2">
+        <div><label class="block text-slate-500 mb-1">預算 ≥</label><input name="budget_min" value="{{ filter.budget_min or '' }}" type="number" class="w-full border rounded px-2 py-1.5" /></div>
+        <div><label class="block text-slate-500 mb-1">預算 ≤</label><input name="budget_max" value="{{ filter.budget_max or '' }}" type="number" class="w-full border rounded px-2 py-1.5" /></div>
+      </div>
+      <div class="flex gap-2">
+        <div><label class="block text-slate-500 mb-1">公告起</label><input name="publish_from" value="{{ filter.publish_from or '' }}" type="date" class="w-full border rounded px-2 py-1.5" /></div>
+        <div><label class="block text-slate-500 mb-1">公告迄</label><input name="publish_to" value="{{ filter.publish_to or '' }}" type="date" class="w-full border rounded px-2 py-1.5" /></div>
+      </div>
+      <div>
+        <label class="block text-slate-500 mb-1">排序</label>
+        <select name="sort" class="w-full border rounded px-2 py-1.5">
+          {% for val, label in [('publish_date','公告日期'),('deadline','截止投標'),('budget_amount','預算金額')] %}
+          <option value="{{ val }}" {{ 'selected' if filter.sort == val }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button class="w-full bg-sky-600 text-white rounded py-2 hover:bg-sky-700">查詢</button>
+      <a href="/tenders" class="block text-center text-slate-500 hover:underline">清除條件</a>
+    </form>
+  </aside>
+
+  <section class="lg:col-span-3">
+    <div class="text-sm text-slate-500 mb-2">共 <span class="font-bold text-slate-700">{{ total }}</span> 筆符合</div>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-slate-500 border-b">
+          <tr>
+            <th class="text-left p-2">公告日</th><th class="text-left p-2">機關</th>
+            <th class="text-left p-2">標案名稱</th><th class="text-right p-2">預算</th>
+            <th class="text-left p-2">截止</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in rows %}
+          <tr class="border-b hover:bg-slate-50">
+            <td class="p-2 whitespace-nowrap text-slate-500">{{ t.publish_date | dash }}</td>
+            <td class="p-2">{{ t.org_name | dash }}</td>
+            <td class="p-2"><a class="text-sky-700 hover:underline" href="/tender/{{ t.pcc_pk }}">{{ t.title | dash }}</a>
+              <div class="text-xs text-slate-400">{{ t.tender_type | dash }} ｜ {{ t.category | dash }}</div></td>
+            <td class="p-2 text-right whitespace-nowrap">{{ t.budget_amount | money }}</td>
+            <td class="p-2 whitespace-nowrap text-rose-600">{{ t.deadline | dash }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="p-8 text-center text-slate-400">查無符合條件的標案。</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if pages > 1 %}
+    <div class="flex justify-center gap-1 mt-4 text-sm flex-wrap">
+      {% for p in range(1, pages + 1) %}
+        {% if p <= 12 or p == pages %}
+        <a href="/tenders?{% for k,v in query_params.items() %}{{ k }}={{ v }}&{% endfor %}page={{ p }}"
+           class="px-3 py-1 rounded {{ 'bg-sky-600 text-white' if p == filter.page else 'bg-white border hover:bg-slate-50' }}">{{ p }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

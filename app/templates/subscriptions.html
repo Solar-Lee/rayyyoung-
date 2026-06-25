@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}關鍵字訂閱 — 政府標案投標平台{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">關鍵字訂閱 + Email 通知</h1>
+<p class="text-sm text-slate-500 mb-4">設定關鍵字後，每日爬取若有命中（標案名稱／機關名稱）的新標案，將寄送 Email 摘要至指定信箱。</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <section class="bg-white rounded-lg shadow p-5">
+    <h2 class="font-bold mb-3">新增訂閱</h2>
+    <form method="post" action="/subscriptions/add" class="space-y-3 text-sm">
+      <div>
+        <label class="block text-slate-500 mb-1">通知 Email</label>
+        <input name="email" type="email" required value="admin@jadedrop.co" class="w-full border rounded px-2 py-1.5" />
+      </div>
+      <div>
+        <label class="block text-slate-500 mb-1">關鍵字（用逗號分隔）</label>
+        <input name="keywords" required placeholder="資訊系統, 軟體開發, 雲端" class="w-full border rounded px-2 py-1.5" />
+      </div>
+      <button class="w-full bg-sky-600 text-white rounded py-2 hover:bg-sky-700">新增</button>
+    </form>
+  </section>
+
+  <section class="lg:col-span-2 bg-white rounded-lg shadow p-5">
+    <h2 class="font-bold mb-3">目前訂閱</h2>
+    {% for s in subs %}
+    <div class="border-b py-3">
+      <div class="font-medium text-slate-700">{{ s.email }}
+        {% if not s.active %}<span class="text-xs text-slate-400">(停用)</span>{% endif %}
+      </div>
+      <div class="flex flex-wrap gap-2 mt-2">
+        {% for kw in s.keywords %}
+        <span class="inline-flex items-center gap-1 bg-sky-50 text-sky-700 rounded-full px-3 py-1 text-sm">
+          {{ kw }}
+          <form method="post" action="/subscriptions/remove" class="inline">
+            <input type="hidden" name="email" value="{{ s.email }}" />
+            <input type="hidden" name="keyword" value="{{ kw }}" />
+            <button class="text-sky-400 hover:text-rose-500" title="移除">✕</button>
+          </form>
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="text-slate-400 text-sm py-4">尚無訂閱。</div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

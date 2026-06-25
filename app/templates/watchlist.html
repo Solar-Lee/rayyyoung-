@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}追蹤清單 — 政府標案投標平台{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">投標追蹤清單 <span class="text-slate-400 text-base">({{ total }})</span></h1>
+  <a href="/export.xlsx" class="px-3 py-2 bg-emerald-700 text-white rounded text-sm hover:bg-emerald-800">匯出全部標案</a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+  {% set colors = {'評估中':'border-amber-400','準備投標':'border-sky-400','已投標':'border-emerald-400','不投標':'border-slate-300'} %}
+  {% for status in statuses %}
+  <div class="bg-slate-50 rounded-lg p-3 border-t-4 {{ colors[status] }}">
+    <h2 class="font-bold mb-3 flex justify-between">{{ status }} <span class="text-slate-400">{{ columns[status]|length }}</span></h2>
+    <div class="space-y-3">
+      {% for e in columns[status] %}
+      <div class="bg-white rounded shadow-sm p-3 text-sm">
+        {% if e.tender %}
+        <a href="/tender/{{ e.tender.pcc_pk }}" class="font-medium text-sky-700 hover:underline">{{ e.tender.title | dash }}</a>
+        <div class="text-xs text-slate-400 mt-1">{{ e.tender.org_name | dash }}</div>
+        <div class="text-xs text-rose-500 mt-1">截止：{{ e.tender.deadline | dash }}</div>
+        {% else %}
+        <div class="font-medium text-slate-500">標案 {{ e.item.tender_pk }}（資料庫無詳情）</div>
+        {% endif %}
+        {% if e.item.note %}<div class="text-xs text-slate-600 mt-2 bg-slate-50 rounded p-2">{{ e.item.note }}</div>{% endif %}
+        <form method="post" action="/watchlist/{{ e.item.id }}/update" class="flex gap-1 mt-2">
+          <select name="status" class="border rounded px-1 py-1 text-xs flex-1">
+            {% for s in statuses %}<option value="{{ s }}" {{ 'selected' if e.item.status == s }}>{{ s }}</option>{% endfor %}
+          </select>
+          <input type="hidden" name="note" value="{{ e.item.note }}" />
+          <button class="text-xs bg-slate-700 text-white rounded px-2">移動</button>
+        </form>
+        <form method="post" action="/watchlist/{{ e.item.id }}/remove" class="mt-1"
+              onsubmit="return confirm('確定移除此追蹤？')">
+          <button class="text-xs text-rose-500 hover:underline">移除</button>
+        </form>
+      </div>
+      {% else %}
+      <div class="text-xs text-slate-400 text-center py-4">無項目</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

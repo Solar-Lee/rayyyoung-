@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<title>L'Heure du Thé — 貴賓邀請函</title>
+<meta name="hz:slide-selector" content=".invitation" />
+<meta name="hz:canvas-width" content="1680" />
+<meta name="hz:canvas-height" content="1120" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #e9e9e9; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+  .invitation {
+    position: relative;
+    width: 1680px;
+    height: 1120px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  /* ---------- Left page : letter ---------- */
+  .letter {
+    position: absolute;
+    left: 0; top: 0;
+    width: 860px; height: 1120px;
+    padding: 78px 110px 70px 130px;
+    text-align: center;
+    color: #6f5a50;
+  }
+
+  .dotted-rule {
+    width: 300px; margin: 0 auto 48px auto;
+    border-top: 2px dotted #b9aca4;
+  }
+
+  .intro {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 2.05;
+    letter-spacing: 3px;
+    color: #6b4a3a;
+    margin-bottom: 40px;
+  }
+  .intro .en { font-family: 'Cormorant Garamond', serif; font-weight: 500; letter-spacing: 1px; }
+
+  .display {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 92px;
+    line-height: 1.02;
+    color: #6d4a3c;
+    letter-spacing: 1px;
+    margin-bottom: 26px;
+  }
+
+  .presente {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: #8a7568;
+    margin-bottom: 14px;
+  }
+
+  .brand-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    font-size: 34px;
+    letter-spacing: 6px;
+    color: #6b4a3a;
+    margin-bottom: 8px;
+  }
+  .brand-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 7px;
+    color: #8a7568;
+    margin-bottom: 44px;
+  }
+
+  .body-copy {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: 16.5px;
+    line-height: 2.15;
+    letter-spacing: 1.6px;
+    color: #71605a;
+    margin-bottom: 34px;
+  }
+
+  .guest {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: 2.5px;
+    color: #5f4339;
+    line-height: 2.1;
+    margin-bottom: 32px;
+  }
+  .guest .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 34px;
+    letter-spacing: 1px;
+    color: #6d4a3c;
+    padding: 0 6px;
+  }
+  .guest .date-strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: #6d4a3c;
+    padding: 0 3px;
+  }
+
+  .closing {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: 16.5px;
+    line-height: 2.1;
+    letter-spacing: 2.5px;
+    color: #71605a;
+    margin-bottom: 22px;
+  }
+
+  .script-sign {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 58px;
+    color: #6d4a3c;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .sign-org {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 3px;
+    color: #8a7568;
+  }
+  .sign-org .en { font-family: 'Cormorant Garamond', serif; font-weight: 500; letter-spacing: 2px; }
+
+  /* ---------- Right page : papercut panel ---------- */
+  .mat {
+    position: absolute;
+    right: 96px; top: 88px;
+    width: 660px; height: 944px;
+    background: #ffffff;
+    border: 1px solid #efeae5;
+    box-shadow: 0 2px 24px rgba(120, 100, 85, 0.10);
+    padding: 34px;
+  }
+  .panel {
+    position: relative;
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #e3ebf1 0%, #d9e4ec 55%, #dee8ee 100%);
+    overflow: hidden;
+  }
+  .panel svg.flora {
+    position: absolute; left: 0; top: 0;
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  .qr-card {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -54%);
+    width: 300px;
+    background: #ffffff;
+    box-shadow: 0 3px 18px rgba(90, 110, 125, 0.18);
+    padding: 24px 24px 20px 24px;
+    text-align: center;
+  }
+  .qr-card img { width: 252px; height: 252px; display: block; margin: 0 auto 12px auto; }
+  .qr-label {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 2.5px;
+    color: #7d8b96;
+  }
+
+  .voucher {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 56px;
+    text-align: center;
+  }
+  .voucher .v-title {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 3.5px;
+    color: #64727e;
+    margin-bottom: 8px;
+  }
+  .voucher .v-no {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 32px;
+    letter-spacing: 6px;
+    color: #4d5b66;
+    margin-bottom: 10px;
+  }
+  .voucher .v-valid {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    color: #77848f;
+  }
+  .voucher .v-valid .en { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 1.5px; font-size: 15px; }
+
+  .panel-head {
+    position: absolute;
+    left: 0; right: 0;
+    top: 52px;
+    text-align: center;
+  }
+  .panel-head .ph-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 30px;
+    letter-spacing: 2px;
+    color: #5a6a76;
+    margin-bottom: 6px;
+  }
+  .panel-head .ph-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 5px;
+    color: #6a7883;
+  }
+
+  /* fold line down the centre, like an opened card */
+  .fold {
+    position: absolute;
+    left: 858px; top: 0;
+    width: 2px; height: 100%;
+    background: linear-gradient(to right, rgba(160,145,135,0.10), rgba(160,145,135,0.02));
+  }
+</style>
+</head>
+<body>
+<div class="invitation" data-canvas-width="1680" data-canvas-height="1120">
+
+  <!-- ================= Left : letter ================= -->
+  <div class="letter">
+    <div class="dotted-rule"></div>
+
+    <div class="intro">
+      台北君悅酒店 <span class="en">Grand&nbsp;Hyatt&nbsp;Taipei</span> 誠摯地邀請您，<br/>
+      翻開精緻的扉頁，探索凱菲屋的雋永午后食光
+    </div>
+
+    <div class="display">L&rsquo;Heure du Th&eacute;</div>
+    <div class="presente">pr&eacute;sent&eacute; par</div>
+    <div class="brand-zh">凱菲屋</div>
+    <div class="brand-en">CAF&Eacute; &middot; GRAND HYATT TAIPEI</div>
+
+    <div class="body-copy">
+      謹以凱菲屋豐盛雅緻的平日下午茶為題，精心款待摯賞生活的您。<br/>
+      層層甜點塔上，英式司康、手作甜點與現沖茶飲交織成詩意的午后；<br/>
+      誠邀您攜同摯友蒞臨，於暖陽與茶香之間，共享雙人份的美好與靜謐。
+    </div>
+
+    <div class="guest">
+      尊敬的 <span class="name">Mr.&nbsp;Lee</span> 台端鈞鑒：<br/>
+      敬請於 <span class="date-strong">2026.12.30</span>（含）前，憑本邀請函蒞臨凱菲屋，<br/>
+      賞用「平日下午茶雙人好禮即享券」。
+    </div>
+
+    <div class="closing">
+      我們在此恭候您的蒞臨，<br/>
+      獻上最誠摯的邀意。
+    </div>
+
+    <div class="script-sign">Caf&eacute;</div>
+    <div class="sign-org">凱菲屋 &middot; 台北君悅酒店 敬邀<br/><span class="en">CAF&Eacute;, GRAND HYATT TAIPEI</span></div>
+  </div>
+
+  <div class="fold"></div>
+
+  <!-- ================= Right : papercut panel ================= -->
+  <div class="mat">
+    <div class="panel">
+      <svg class="flora" viewBox="0 0 592 876" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- five-petal blossom -->
+          <g id="blossom">
+            <g fill="#ffffff">
+              <ellipse cx="0" cy="-7.2" rx="4.6" ry="6.4"/>
+              <ellipse cx="6.9" cy="-2.2" rx="4.6" ry="6.4" transform="rotate(72 6.9 -2.2)"/>
+              <ellipse cx="4.2" cy="5.8" rx="4.6" ry="6.4" transform="rotate(144 4.2 5.8)"/>
+              <ellipse cx="-4.2" cy="5.8" rx="4.6" ry="6.4" transform="rotate(216 -4.2 5.8)"/>
+              <ellipse cx="-6.9" cy="-2.2" rx="4.6" ry="6.4" transform="rotate(288 -6.9 -2.2)"/>
+            </g>
+            <circle r="2.1" fill="#dfe8ee"/>
+          </g>
+          <!-- blossom cluster -->
+          <g id="cluster">
+            <use href="#blossom" transform="translate(0,0) scale(1.05)"/>
+            <use href="#blossom" transform="translate(16,9) scale(0.85)"/>
+            <use href="#blossom" transform="translate(-13,13) scale(0.8)"/>
+            <use href="#blossom" transform="translate(4,22) scale(0.7)"/>
+            <circle cx="-18" cy="-4" r="3" fill="#ffffff"/>
+            <circle cx="24" cy="-3" r="2.4" fill="#ffffff"/>
+          </g>
+          <!-- butterfly -->
+          <g id="butterfly" fill="#ffffff">
+            <ellipse cx="-6" cy="-4" rx="7.5" ry="5" transform="rotate(-30 -6 -4)"/>
+            <ellipse cx="6" cy="-4" rx="7.5" ry="5" transform="rotate(30 6 -4)"/>
+            <ellipse cx="-4.6" cy="4.4" rx="5" ry="3.6" transform="rotate(-45 -4.6 4.4)"/>
+            <ellipse cx="4.6" cy="4.4" rx="5" ry="3.6" transform="rotate(45 4.6 4.4)"/>
+            <ellipse cx="0" cy="0" rx="1.5" ry="6"/>
+          </g>
+          <!-- leaf sprig -->
+          <g id="sprig" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round">
+            <path d="M0,0 q10,-18 26,-26"/>
+            <path d="M8,-10 q8,-2 14,2" />
+            <path d="M15,-18 q8,-2 13,3" />
+          </g>
+        </defs>
+
+        <!-- garland : top left branch -->
+        <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round">
+          <path d="M-10,120 C90,60 200,40 330,64 C420,80 480,70 560,30"/>
+          <path d="M120,86 q30,34 14,72"/>
+          <path d="M260,56 q-6,40 -40,60"/>
+          <path d="M430,72 q10,36 44,50"/>
+        </g>
+        <use href="#cluster" transform="translate(60,96) rotate(-8)"/>
+        <use href="#cluster" transform="translate(160,64) rotate(14) scale(1.15)"/>
+        <use href="#cluster" transform="translate(268,52) rotate(-10) scale(0.95)"/>
+        <use href="#cluster" transform="translate(380,74) rotate(8) scale(1.1)"/>
+        <use href="#cluster" transform="translate(492,52) rotate(-14) scale(0.9)"/>
+        <use href="#cluster" transform="translate(540,110) rotate(20) scale(0.75)"/>
+        <use href="#cluster" transform="translate(134,158) rotate(24) scale(0.8)"/>
+        <use href="#cluster" transform="translate(222,120) rotate(-20) scale(0.7)"/>
+        <use href="#cluster" transform="translate(474,124) rotate(10) scale(0.8)"/>
+        <use href="#butterfly" transform="translate(320,130) rotate(-18) scale(1.3)"/>
+        <use href="#butterfly" transform="translate(58,190) rotate(12)"/>
+
+        <!-- garland : left edge -->
+        <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+          <path d="M28,180 C10,300 14,420 34,540 C48,630 40,720 20,800"/>
+        </g>
+        <use href="#cluster" transform="translate(30,262) rotate(40) scale(0.8)"/>
+        <use href="#cluster" transform="translate(22,388) rotate(-24) scale(0.7)"/>
+        <use href="#cluster" transform="translate(36,514) rotate(16) scale(0.8)"/>
+        <use href="#sprig" transform="translate(28,320) rotate(20)"/>
+        <use href="#sprig" transform="translate(30,450) rotate(60) scale(0.9)"/>
+
+        <!-- garland : right edge -->
+        <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+          <path d="M566,150 C584,280 580,400 560,520 C548,610 556,700 576,790"/>
+        </g>
+        <use href="#cluster" transform="translate(566,214) rotate(-30) scale(0.75)"/>
+        <use href="#cluster" transform="translate(572,352) rotate(18) scale(0.7)"/>
+        <use href="#cluster" transform="translate(560,488) rotate(-12) scale(0.8)"/>
+        <use href="#sprig" transform="translate(566,280) rotate(140) scale(-0.9,0.9)"/>
+        <use href="#butterfly" transform="translate(556,420) rotate(24) scale(0.9)"/>
+
+        <!-- garland : bottom -->
+        <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round">
+          <path d="M-10,780 C110,830 230,846 330,824 C440,800 520,816 600,780"/>
+          <path d="M150,812 q-8,-40 -40,-56"/>
+          <path d="M320,826 q4,-42 36,-58"/>
+        </g>
+        <use href="#cluster" transform="translate(70,796) rotate(10) scale(1.05)"/>
+        <use href="#cluster" transform="translate(180,822) rotate(-12) scale(1.15)"/>
+        <use href="#cluster" transform="translate(300,830) rotate(6)"/>
+        <use href="#cluster" transform="translate(420,806) rotate(-8) scale(1.1)"/>
+        <use href="#cluster" transform="translate(520,792) rotate(16) scale(0.85)"/>
+        <use href="#cluster" transform="translate(120,760) rotate(-24) scale(0.7)"/>
+        <use href="#cluster" transform="translate(374,776) rotate(18) scale(0.75)"/>
+        <use href="#butterfly" transform="translate(240,764) rotate(14) scale(1.1)"/>
+
+        <!-- grass at very bottom -->
+        <g fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round">
+          <path d="M60,876 q6,-30 -4,-52"/>
+          <path d="M78,876 q2,-24 12,-40"/>
+          <path d="M500,876 q-4,-28 6,-48"/>
+          <path d="M522,876 q0,-22 -10,-38"/>
+          <path d="M290,876 q4,-20 -2,-34"/>
+        </g>
+      </svg>
+
+      <div class="panel-head">
+        <div class="ph-en">Afternoon Tea for Two</div>
+        <div class="ph-zh">平日下午茶雙人好禮即享券</div>
+      </div>
+
+      <div class="qr-card">
+        <img src="data:image/png;base64,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" alt="兌換 QR Code" width="252" height="252"/>
+        <div class="qr-label">憑此 QR CODE 掃描兌換</div>
+      </div>
+
+      <div class="voucher">
+        <div class="v-title">邀請貴賓號（兌換編號）</div>
+        <div class="v-no">31371079052745</div>
+        <div class="v-valid">有效期限至 <span class="en">2026.12.30</span>&nbsp;止 &middot; 台北君悅酒店 凱菲屋</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
